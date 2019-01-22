@@ -1,0 +1,68 @@
+<form #f="ngForm" (ngSubmit)="submitContact(); f.reset();">
+
+  <!--
+    Grâce à la variable local #f,
+    je peux connaitre l'état de
+    validation du formulaire
+  -->
+
+  <h5 class="text-center m-4">
+    Ajouter un Contact
+  </h5>
+
+  <!--<pre>
+    {{ nouveauContact | json }}
+    {{ f.valid }}
+  </pre>-->
+
+  <div class="form-group">
+    <input type="text"
+           name="name"
+           #name="ngModel"
+           [(ngModel)]="nouveauContact.name"
+           [class.is-invalid]="name.touched && name.invalid"
+           [class.is-valid]="name.valid"
+           required
+           class="form-control"
+           placeholder="Saisissez le nom complet...">
+    <div class="invalid-feedback">
+      Vous devez saisir votre nom complet.
+    </div>
+  </div> <!-- /.form-group -->
+
+  <div class="form-group">
+    <input type="text"
+           name="username"
+           #username="ngModel"
+           [(ngModel)]="nouveauContact.username"
+           [class.is-valid]="username.valid"
+           [class.is-invalid]="username.touched && username.invalid"
+           required
+           class="form-control"
+           placeholder="Saisissez le pseudo...">
+    <div class="invalid-feedback">
+      Vous devez saisir votre pseudo.
+    </div>
+  </div> <!-- /.form-group -->
+
+  <div class="form-group">
+    <input type="email"
+           name="email"
+           #email="ngModel"
+           [(ngModel)]="nouveauContact.email"
+           [class.is-valid]="email.valid"
+           [class.is-invalid]="email.touched && email.invalid"
+           required
+           class="form-control"
+           placeholder="Saisissez l'email...">
+    <div class="invalid-feedback">
+      Vous devez saisir votre email.
+    </div>
+  </div> <!-- /.form-group -->
+
+  <button [disabled]="f.invalid"
+    class="btn btn-block btn-dark">
+    Créer le contact
+  </button>
+
+</form>

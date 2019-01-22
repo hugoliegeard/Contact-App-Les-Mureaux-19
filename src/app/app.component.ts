@@ -3,18 +3,9 @@
  * notre application, on importe "Component"
  * via @angular/core.
  */
-import { Component } from '@angular/core';
-
-class Contact {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address?: object;
-  phone?: number;
-  website?: string;
-  company?: object;
-}
+import {Component, OnInit} from '@angular/core';
+import {Contact} from './shared/models/contact';
+import {ContactStorageService} from './shared/services/contact-storage.service';
 
 /**
  * @Component est ce qu'on appel un décorateur.
@@ -60,10 +51,13 @@ class Contact {
  * Dans notre contexte MVVM, notre classe
  * correspond au Model.
  */
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   // -- Déclaration d'une Variable
   title = 'Gestion de Contacts';
+
+  // -- Contact choisi par mon utilisateur
+  contactActif: Contact;
 
   // -- Déclaration d'un Object Contact
   unContact: Contact = {
@@ -74,31 +68,26 @@ export class AppComponent {
   };
 
   // -- Tableau de Contacts
-  mesContacts: Contact[] = [
-    {
-      id: 1,
-      name: 'Hugo LIEGEARD',
-      username: 'hugoliegeard',
-      email: 'wf3@hl-media.fr'
-    },
-    {
-      id: 2,
-      name: 'Akim BOGOSS',
-      username: 'akimbogoss',
-      email: 'akim.bogoss@gmail.com'
-    },
-    {
-      id: 3,
-      name: 'Chris SIMO ',
-      username: 'chrissimo',
-      email: 'chris.simo@gmail.com'
-    },
-    {
-      id: 4,
-      name: 'Aisha ABDALLA',
-      username: 'aisha.abdalla',
-      email: 'aisha.abdalla@gmail.com'
-    },
-  ];
+  mesContacts: Contact[] = [];
 
+  constructor(private contactStorage: ContactStorageService) {
+  }
+
+  /**
+   * Permet d'afficher le profil
+   * d'un contact passé en paramètre.
+   */
+  showProfil(contact: Contact) {
+    // console.log(contact)
+    this.contactActif = contact;
+  }
+
+  addContact(nouveauContact: Contact) {
+    this.mesContacts.push(nouveauContact);
+    this.contactStorage.save(this.mesContacts);
+  }
+
+  ngOnInit(): void {
+    this.mesContacts = this.contactStorage.getContacts();
+  }
 }
