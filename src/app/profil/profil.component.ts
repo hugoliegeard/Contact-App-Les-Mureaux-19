@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Contact} from '../shared/models/contact';
 
 @Component({
@@ -9,10 +9,15 @@ import {Contact} from '../shared/models/contact';
 export class ProfilComponent implements OnInit {
 
   @Input() contactActif: Contact;
+  @Output() saveContactEvent = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  saveContacts() {
+    this.saveContactEvent.emit();
   }
 
 }

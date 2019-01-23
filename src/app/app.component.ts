@@ -84,10 +84,14 @@ export class AppComponent implements OnInit {
 
   addContact(nouveauContact: Contact) {
     this.mesContacts.push(nouveauContact);
-    this.contactStorage.save(this.mesContacts);
+    this.saveContacts();
   }
 
   ngOnInit(): void {
     this.mesContacts = this.contactStorage.getContacts();
+  }
+
+  saveContacts() {
+    this.contactStorage.save(this.mesContacts);
   }
 }

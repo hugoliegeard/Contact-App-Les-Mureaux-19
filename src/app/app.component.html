@@ -35,7 +35,8 @@
       <app-ajouter (newContactEvent)="addContact($event)"></app-ajouter>
     </div> <!-- /.col-sm-4 -->
     <div class="col-sm-8">
-      <app-profil [contactActif]="contactActif"></app-profil>
+      <app-profil (saveContactEvent)="saveContacts()"
+                  [contactActif]="contactActif"></app-profil>
     </div> <!-- /.col-sm-8 -->
   </div> <!-- /.row -->
   <pre>
